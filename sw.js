@@ -25,6 +25,8 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
+  // 강의용 다운로드 파일은 앱 저장소와 상관없이 그대로 받게 한다
+  if (url.pathname.indexOf('/download/') !== -1) return;
   const cacheKey = req.mode === 'navigate' ? new URL('./index.html', self.registration.scope).href : url.origin + url.pathname;
 
   e.respondWith((async () => {
